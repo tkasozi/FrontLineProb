@@ -123,14 +123,14 @@ class Solution {
     public String sortedTokenizer(String str) {
         String[] tempArgs = str.split("\\s");
         String tempResult = "";
-        java.util.List<Entity> tespList = new java.util.ArrayList<>();
+        java.util.List<Entity> testList = new java.util.ArrayList<>();
 
         for (int i = 0; i < tempArgs.length; i++) {
             String entityString = tempArgs[i];
-
+            
             Entity entity;
 
-            if (!entityString.isEmpty()) {
+            if (!entityString.isEmpty()) { 
                 if (!entityString.contains("-")) {
 
                     entity = new Entity();
@@ -149,13 +149,14 @@ class Solution {
                         ++i; //skip
                     }
                 }
-                tespList.add(entity);
+                
+                testList.add(entity);
             }
         }
 
-        java.util.Collections.sort(tespList, new FrontLineComparator());
+        java.util.Collections.sort(testList, new FrontLineComparator());
 
-        for (Entity e : tespList) {
+        for (Entity e : testList) {
             if (e.hasRelation()) {
                 Entity rel = e.getRelation();
                 tempResult += e.getName() + " " + rel.getName() + " ";
