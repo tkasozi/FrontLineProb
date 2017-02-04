@@ -89,8 +89,6 @@ class Entity {
 
 class FrontLineComparator implements java.util.Comparator<Entity> {
 
-    String smaller = "";
-
     @Override
     public int compare(Entity o1, Entity o2) {
         if (new Integer(o1.getLevel()).compareTo(o2.getLevel()) != 0) {
