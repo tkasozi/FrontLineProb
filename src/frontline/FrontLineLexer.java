@@ -19,34 +19,18 @@ package frontline;
  * Bonus output (alphabetic order): created employee - employeeType -- id -
  * firstname - id - lastname id location
  *
- * OUTPUT:
- ******problem1******
-id
-created
-employee
--id
--firstname
--employeeType
---id
--lastname
-location
-
-******bonus******
-created
-employee
-id
--employeeType
---id
--firstname
--id
--lastname
-location
+ * OUTPUT: *****problem1****** id created employee -id -firstname -employeeType
+ * --id -lastname location
+ *
+ ******bonus****** created employee id -employeeType --id -firstname -id
+ * -lastname location
  */
-class Entity {
+class Entity implements Comparable<Entity> {
 
     private String name = "";
     private int level = 0;
     private Entity relation = null;
+    private boolean flag = false;
 
     public Entity() {
 
@@ -85,16 +69,24 @@ class Entity {
         return name;
     }
 
+    @Override
+    public int compareTo(Entity o) {
+        return this.getName().compareToIgnoreCase(o.getName());
+    }
+
 }
 
 class FrontLineComparator implements java.util.Comparator<Entity> {
 
     @Override
     public int compare(Entity o1, Entity o2) {
-        if (new Integer(o1.getLevel()).compareTo(o2.getLevel()) != 0) {
+        int eq = o1.compareTo(o2);
+        int levelEQ = new Integer(o1.getLevel()).compareTo(o2.getLevel());
+
+        if (levelEQ != 0) {
             return 0;
         } else {
-            return o1.getName().compareToIgnoreCase(o2.getName());
+            return eq;
         }
     }
 }
@@ -173,7 +165,7 @@ class Solution {
             }
         }
 
-        java.util.Collections.sort(entityList, new FrontLineComparator());
+        java.util.Collections.sort(entityList , new FrontLineComparator());
 
         for (Entity e : entityList) {
             if (e.hasRelation()) {
