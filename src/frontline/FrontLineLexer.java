@@ -6,9 +6,7 @@ package frontline;
  *
  * @author tkasozi <talik.aziizi@gmail.com>
  *
- * Talik Kasozi
- *
- * (781)300-1440
+ * Talik Kasozi (781)300-1440
  *
  * February 3, 2017
  *
@@ -21,6 +19,28 @@ package frontline;
  * Bonus output (alphabetic order): created employee - employeeType -- id -
  * firstname - id - lastname id location
  *
+ * OUTPUT:
+ ******problem1******
+id
+created
+employee
+-id
+-firstname
+-employeeType
+--id
+-lastname
+location
+
+******bonus******
+created
+employee
+id
+-employeeType
+--id
+-firstname
+-id
+-lastname
+location
  */
 class Entity {
 
@@ -69,15 +89,16 @@ class Entity {
 
 class FrontLineComparator implements java.util.Comparator<Entity> {
 
+    String smaller = "";
+
     @Override
     public int compare(Entity o1, Entity o2) {
-        if (new Integer(o1.getLevel()).compareTo(o2.getLevel()) == 0) {
-            return o1.getName().compareToIgnoreCase(o2.getName());
+        if (new Integer(o1.getLevel()).compareTo(o2.getLevel()) != 0) {
+            return 0;
         } else {
-            return 1;
+            return o1.getName().compareToIgnoreCase(o2.getName());
         }
     }
-
 }
 
 class Solution {
@@ -108,7 +129,7 @@ class Solution {
      */
     public void exe(String problemName) {
         this.problemName = problemName;
-        
+
         switch (this.problemName) {
             case "problem1":
                 result = Tokenizer(this.list, 0, "", -1, false);
@@ -123,14 +144,14 @@ class Solution {
     public String sortedTokenizer(String str) {
         String[] tempArgs = str.split("\\s");
         String tempResult = "";
-        java.util.List<Entity> testList = new java.util.ArrayList<>();
+        java.util.List<Entity> entityList = new java.util.ArrayList<>();
 
         for (int i = 0; i < tempArgs.length; i++) {
             String entityString = tempArgs[i];
-            
+
             Entity entity;
 
-            if (!entityString.isEmpty()) { 
+            if (!entityString.isEmpty()) {
                 if (!entityString.contains("-")) {
 
                     entity = new Entity();
@@ -149,14 +170,14 @@ class Solution {
                         ++i; //skip
                     }
                 }
-                
-                testList.add(entity);
+
+                entityList.add(entity);
             }
         }
 
-        java.util.Collections.sort(testList, new FrontLineComparator());
+        java.util.Collections.sort(entityList, new FrontLineComparator());
 
-        for (Entity e : testList) {
+        for (Entity e : entityList) {
             if (e.hasRelation()) {
                 Entity rel = e.getRelation();
                 tempResult += e.getName() + " " + rel.getName() + " ";
@@ -218,7 +239,7 @@ class Solution {
 
     @Override
     public String toString() {
-        String resultString = "******"+this.problemName + "******\n";
+        String resultString = "******" + this.problemName + "******\n";
 
         for (String entity : this.result.split("\\s")) {
             if (!entity.isEmpty()) {
